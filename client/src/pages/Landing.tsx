@@ -1,25 +1,49 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sprout, Heart, HandHeart, Users, MapPin, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
+import { Sprout, Heart, HandHeart, Users, MapPin, TrendingUp, ArrowRight, Star, Globe, Shield } from "lucide-react";
 
 export default function Landing() {
-  const handleLogin = () => {
-    window.location.href = "/api/login";
+  const handleGetStarted = () => {
+    // Will be updated to use Supabase auth
+    console.log("Get started clicked");
   };
 
+  // Floating food cards data
+  const floatingFoods = [
+    { id: 1, name: "Biryani", emoji: "🍚", serves: 12, time: "2h left" },
+    { id: 2, name: "Pizza", emoji: "🍕", serves: 8, time: "4h left" },
+    { id: 3, name: "Dal Rice", emoji: "🍛", serves: 15, time: "1h left" },
+    { id: 4, name: "Sandwiches", emoji: "🥪", serves: 6, time: "3h left" },
+    { id: 5, name: "Fruits", emoji: "🍎", serves: 10, time: "6h left" },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl"></div>
+      </div>
+
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-gray-200">
+      <nav className="relative z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <Sprout className="text-white h-5 w-5" />
               </div>
-              <span className="ml-2 text-xl font-semibold text-neutral">Annapurna</span>
+              <span className="ml-2 text-xl font-bold text-white">Annapurna</span>
             </div>
-            <Button onClick={handleLogin} className="bg-primary hover:bg-primary/90">
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#discover" className="text-gray-300 hover:text-white transition-colors">Discover</a>
+              <a href="#impact" className="text-gray-300 hover:text-white transition-colors">Impact</a>
+              <a href="#community" className="text-gray-300 hover:text-white transition-colors">Community</a>
+              <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
+            </div>
+            <Button onClick={handleGetStarted} className="bg-primary hover:bg-primary/90 text-white">
               Get Started
             </Button>
           </div>
@@ -27,73 +51,296 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="gradient-bg py-16">
+      <section className="relative z-10 pt-20 pb-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Turning Food Waste into
-                <span className="text-yellow-300"> Hope</span>
-              </h1>
-              <p className="text-xl mb-8 text-teal-100">
-                Connect donors with NGOs and volunteers to reduce food wastage and feed those in need. Every meal matters.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  onClick={handleLogin}
-                  className="bg-secondary hover:bg-secondary/90 text-white"
-                  size="lg"
+          <div className="text-center">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl md:text-7xl font-bold text-white mb-6"
+            >
+              Welcome to <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Annapurna</span>:
+            </motion.h1>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-2xl md:text-4xl font-semibold text-gray-300 mb-4"
+            >
+              Your Food Sharing Community
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto"
+            >
+              Unleash your generosity and create connections with AI at Annapurna. Share your surplus food with friends and the world in this simple online platform where every meal meets art.
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            >
+              <Button 
+                onClick={handleGetStarted}
+                size="lg"
+                className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl"
+              >
+                Share Food
+              </Button>
+              <Button 
+                onClick={handleGetStarted}
+                variant="outline"
+                size="lg"
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-xl"
+              >
+                Find Food <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </motion.div>
+
+            {/* Floating Food Cards */}
+            <div className="relative mt-16">
+              {floatingFoods.map((food, index) => (
+                <motion.div
+                  key={food.id}
+                  initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: 0.8 + index * 0.1,
+                    ease: "easeOut"
+                  }}
+                  className={`absolute bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 ${
+                    index === 0 ? 'left-4 top-0 md:left-20' :
+                    index === 1 ? 'right-4 top-12 md:right-32' :
+                    index === 2 ? 'left-1/2 transform -translate-x-1/2 top-24' :
+                    index === 3 ? 'left-8 bottom-4 md:left-40' :
+                    'right-8 bottom-16 md:right-20'
+                  }`}
+                  whileHover={{ scale: 1.05, y: -5 }}
                 >
-                  <Heart className="mr-2 h-4 w-4" />
-                  Start Donating
-                </Button>
-                <Button 
-                  onClick={handleLogin}
-                  variant="outline" 
-                  className="bg-white text-primary hover:bg-gray-100 border-white"
-                  size="lg"
-                >
-                  <HandHeart className="mr-2 h-4 w-4" />
-                  Join as Volunteer
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8 text-center">
-                <div className="text-6xl mb-4">🌾</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Real-time Impact</h3>
-                <p className="text-teal-100">Join thousands making a difference</p>
-                <div className="mt-6 flex items-center justify-center space-x-3">
-                  <div className="w-3 h-3 bg-yellow-300 rounded-full status-pulse"></div>
-                  <span className="text-sm text-white">Live donations happening now</span>
-                </div>
-              </div>
+                  <div className="text-center">
+                    <div className="text-4xl mb-2">{food.emoji}</div>
+                    <h4 className="text-white font-semibold text-sm">{food.name}</h4>
+                    <p className="text-gray-300 text-xs">Serves {food.serves}</p>
+                    <div className="flex items-center justify-center mt-2">
+                      <div className="w-2 h-2 bg-secondary rounded-full mr-2"></div>
+                      <span className="text-xs text-gray-400">{food.time}</span>
+                    </div>
+                  </div>
+                  <div className="absolute top-2 right-2">
+                    <Heart className="h-4 w-4 text-gray-400 hover:text-red-400 cursor-pointer" />
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white">
+      {/* Impact Stats Section */}
+      <section id="impact" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-neutral mb-4">Creating Real Impact</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Every meal shared creates a ripple effect of positive change in our communities</p>
+          </motion.div>
+          
           <div className="grid md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">12,847</div>
-              <div className="text-gray-600">Meals Donated</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-secondary mb-2">892</div>
-              <div className="text-gray-600">Active Volunteers</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-success mb-2">156</div>
-              <div className="text-gray-600">Partner NGOs</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-warning mb-2">23</div>
-              <div className="text-gray-600">Cities Covered</div>
-            </div>
+            {[
+              { number: "25,847", label: "Meals Shared", icon: "🍽️", color: "text-primary" },
+              { number: "1,245", label: "Active Heroes", icon: "🦸‍♀️", color: "text-secondary" },
+              { number: "89", label: "Partner NGOs", icon: "🏢", color: "text-accent" },
+              { number: "12", label: "Cities", icon: "🌍", color: "text-warning" }
+            ].map((stat, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                className="text-center group"
+              >
+                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">{stat.icon}</div>
+                <div className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.number}</div>
+                <div className="text-gray-600 font-medium">{stat.label}</div>
+              </motion.div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-neutral mb-4">How Annapurna Works</h2>
+            <p className="text-xl text-gray-600">Three simple steps to make a difference</p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-3 gap-12">
+            {[
+              {
+                step: "01",
+                title: "Share Your Food",
+                description: "Upload photos of your surplus food, add details about quantity and pickup time. Every share matters!",
+                icon: "📸",
+                color: "bg-primary"
+              },
+              {
+                step: "02", 
+                title: "Connect Instantly",
+                description: "Our AI matches your donation with nearby NGOs and volunteers for quick pickup and distribution.",
+                icon: "🤝",
+                color: "bg-secondary"
+              },
+              {
+                step: "03",
+                title: "Track Your Impact",
+                description: "Watch your contribution feed families and build communities. See the lives you're changing in real-time.",
+                icon: "📊",
+                color: "bg-accent"
+              }
+            ].map((step, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                className="relative"
+              >
+                <Card className="p-8 h-full hover:shadow-xl transition-shadow duration-300 border-0 bg-white/70 backdrop-blur-sm">
+                  <CardContent className="p-0">
+                    <div className={`w-16 h-16 ${step.color} rounded-2xl flex items-center justify-center mb-6 text-white font-bold text-xl`}>
+                      {step.step}
+                    </div>
+                    <div className="text-4xl mb-4">{step.icon}</div>
+                    <h3 className="text-xl font-bold text-neutral mb-4">{step.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                  </CardContent>
+                </Card>
+                {index < 2 && (
+                  <div className="hidden md:block absolute top-1/2 -right-6 transform -translate-y-1/2">
+                    <ArrowRight className="h-6 w-6 text-gray-400" />
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Community Testimonials */}
+      <section id="community" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-neutral mb-4">Stories from Our Community</h2>
+            <p className="text-xl text-gray-600">Real people, real impact, real change</p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Priya Sharma",
+                role: "Food Donor",
+                image: "👩‍🍳",
+                quote: "I used to feel guilty throwing away leftover food from my restaurant. Now with Annapurna, every surplus meal finds a family in need. It's beautiful!",
+                rating: 5
+              },
+              {
+                name: "Helping Hands NGO",
+                role: "Partner Organization", 
+                image: "🏢",
+                quote: "Annapurna has revolutionized how we source food for our shelter. The real-time notifications help us respond quickly to families in crisis.",
+                rating: 5
+              },
+              {
+                name: "Rahul Verma",
+                role: "Volunteer",
+                image: "🚀",
+                quote: "Being a volunteer on Annapurna gives me purpose. Every pickup I make feeds 10-15 people. The impact tracking keeps me motivated!",
+                rating: 5
+              }
+            ].map((testimonial, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+              >
+                <Card className="p-6 h-full hover:shadow-lg transition-shadow duration-300">
+                  <CardContent className="p-0">
+                    <div className="flex items-center mb-4">
+                      <div className="text-4xl mr-4">{testimonial.image}</div>
+                      <div>
+                        <h4 className="font-bold text-neutral">{testimonial.name}</h4>
+                        <p className="text-sm text-gray-600">{testimonial.role}</p>
+                      </div>
+                    </div>
+                    <div className="flex mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                      ))}
+                    </div>
+                    <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-4xl font-bold mb-6">Ready to Change Lives?</h2>
+            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+              Join thousands of food heroes who are making a difference one meal at a time. Together, we can build a hunger-free world.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={handleGetStarted}
+                size="lg" 
+                className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg font-semibold rounded-xl"
+              >
+                <Users className="mr-2 h-5 w-5" />
+                Join Annapurna Today
+              </Button>
+              <Button 
+                onClick={handleGetStarted}
+                variant="outline"
+                size="lg"
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-xl"
+              >
+                <Globe className="mr-2 h-5 w-5" />
+                Explore Community
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -147,7 +394,7 @@ export default function Landing() {
             Join our community of changemakers and help us build a hunger-free world.
           </p>
           <Button 
-            onClick={handleLogin}
+            onClick={handleGetStarted}
             size="lg" 
             className="bg-primary hover:bg-primary/90 text-white"
           >
