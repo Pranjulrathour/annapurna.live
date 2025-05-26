@@ -1,0 +1,249 @@
+Absolutely, bhai! Here’s a **detailed, professional, and future-ready PRD** for **Project ANNAPURNA** — crafted with that big brother mentor energy and Gen Z hustle spirit. Let’s make this crystal clear for you and any collaborators, investors, or hackathon judges. 🚀🔥
+
+---
+
+# 🧾 Product Requirement Document (PRD) — Project ANNAPURNA
+
+---
+
+## 1. 📌 Project Overview
+
+**ANNAPURNA** is a real-time food donation and distribution platform designed to connect food donors (individuals, restaurants, canteens) with NGOs and volunteers, reducing food wastage and ensuring the needy get meals. The platform will use modern web technologies (ReactJS, NodeJS, Supabase) to provide a seamless, scalable, and rewarding experience for all users.
+
+---
+
+## 2. 🎯 Vision & Mission
+
+* **Vision:** Eradicate hunger by creating a hyperlocal, tech-powered food donation network that minimizes wastage and maximizes social impact.
+* **Mission:** Empower donors, NGOs, and volunteers with an easy-to-use platform that incentivizes food donation and distribution through transparency, real-time updates, and community recognition.
+
+---
+
+## 3. 👥 User Personas & Needs
+
+| Persona              | Description                                    | Needs & Goals                                           |
+| -------------------- | ---------------------------------------------- | ------------------------------------------------------- |
+| **Individual Donor** | Has leftover/home-cooked food, wants to donate | Easy listing, status updates, feel valued               |
+| **NGO / Canteen**    | Distributes food, sometimes donates in bulk    | Verified access, donation discovery, pickup tracking    |
+| **Volunteer**        | Picks up food and delivers                     | Real-time task notifications, recognition, impact stats |
+| **Admin**            | Platform manager                               | User verification, reporting, fraud prevention          |
+
+---
+
+## 4. 🚀 MVP Features (Must-Haves)
+
+### 4.1 Authentication & User Management
+
+* Email/password signup and login with **Supabase Auth**
+* Role selection during signup: **Donor, NGO, Volunteer**
+* Role-based dashboards with customized views and permissions
+
+### 4.2 Food Donation (Donor Flow)
+
+* Donation form with fields: Food type, quantity, expiry date/time, pickup location (lat/long), photo upload
+* Donation lifecycle statuses: Submitted → Claimed → Picked Up → Delivered
+* Donation history with timestamps and status updates
+
+### 4.3 Donation Discovery & Claim (NGO & Volunteer Flow)
+
+* Feed of nearby available donations filtered by location and expiry
+* Interactive map with clickable pins (React Leaflet + OpenStreetMap)
+* Claim button to assign donation to volunteer or NGO
+* Status updates with timestamps visible to all involved parties
+
+### 4.4 Real-Time Notifications
+
+* Email & in-app notifications triggered on status changes
+* Key alerts:
+
+  * Donor: Donation claimed, picked up, delivered
+  * NGO: New nearby donation available
+  * Volunteer: New pickup assigned
+
+### 4.5 Impact Dashboard (Basic)
+
+* Donors: Total meals donated, recent donations
+* NGOs: Total meals distributed, active pickups
+* Volunteers: Deliveries completed, points earned (basic)
+
+### 4.6 Admin Panel (Basic)
+
+* View all users grouped by role
+* Approve and verify NGOs and Volunteers
+* Overview of total donations and pickups
+* Basic reporting (e.g., total meals donated per week)
+
+---
+
+## 5. ✨ Phase 2 Features (Post-MVP)
+
+### 5.1 Mobile Optimization & PWA Support
+
+* Fully responsive UI with **TailwindCSS**
+* Offline support with localStorage caching for donation form submissions
+
+### 5.2 Volunteer Leaderboard & Gamification
+
+* Points system for pickups, bonuses for urgent donations
+* Public leaderboard and badges
+
+### 5.3 Social Sharing
+
+* Share impact cards (“I just helped feed 10 people!”) on WhatsApp, Instagram, LinkedIn, X
+
+### 5.4 Advanced Analytics & Reporting
+
+* City/district-wise donation heatmaps
+* Volunteer activity maps and stats
+* PDF report generation for donors and NGOs
+
+### 5.5 QR Code Pickup Verification
+
+* Donor generates unique QR code per donation
+* Volunteer scans QR to confirm pickup completion
+
+### 5.6 Accessibility & UI Enhancements
+
+* Dark mode toggle
+* Multi-language support (Hindi, English)
+
+---
+
+## 6. 🛠️ Tech Stack & Tools
+
+| Layer         | Tech / Library / Service                      | Reason / Benefit                          |
+| ------------- | --------------------------------------------- | ----------------------------------------- |
+| Frontend      | ReactJS + TailwindCSS + Framer Motion         | Modern, fast, customizable UI/UX          |
+| Backend       | NodeJS + Express                              | Scalable, easy to extend APIs             |
+| Database      | Supabase (Postgres + Auth)                    | Real-time, role-based security, easy auth |
+| Maps          | React Leaflet + OpenStreetMap                 | Free, customizable interactive maps       |
+| Notifications | EmailJS (MVP), Twilio (SMS opt.)              | Easy email & SMS notifications            |
+| Deployment    | Vercel / Netlify (Frontend), Supabase Backend | Fast deployment, scalability              |
+| Analytics     | Google Analytics / Supabase Logs              | Usage and impact monitoring               |
+| Testing       | Jest + React Testing Library                  | Reliable unit & integration tests         |
+
+---
+
+## 7. UI/UX Flow Overview
+
+1. **Signup/Login**
+
+   * User selects role → completes auth → lands on role-based dashboard
+
+2. **Donor Dashboard**
+
+   * Add new donation → track existing donations → view impact stats
+
+3. **NGO Dashboard**
+
+   * Browse nearby donations → claim pickups → update delivery status → view impact
+
+4. **Volunteer Dashboard**
+
+   * View assigned pickups → confirm pickups via app/QR → track points → leaderboard
+
+5. **Admin Dashboard**
+
+   * Verify users → view reports → moderate platform
+
+---
+
+## 8. Data Schema (Simplified)
+
+### Users Table
+
+* `id` (UUID, PK)
+* `name` (string)
+* `email` (string, unique)
+* `role` (enum: donor, ngo, volunteer, admin)
+* `profile_pic` (string URL)
+* `verified` (boolean)
+
+### Donations Table
+
+* `id` (UUID, PK)
+* `donor_id` (FK to Users)
+* `food_type` (string)
+* `quantity` (number)
+* `expiry` (timestamp)
+* `location` (geopoint: lat/lng)
+* `image_url` (string)
+* `status` (enum: submitted, claimed, picked\_up, delivered)
+* `created_at`, `updated_at` (timestamps)
+
+### Claims Table
+
+* `id` (UUID, PK)
+* `donation_id` (FK)
+* `ngo_id` (FK)
+* `volunteer_id` (FK)
+* `status` (enum: claimed, picked\_up, delivered)
+* `timestamps` (claimed\_at, picked\_up\_at, delivered\_at)
+
+### Impact Table
+
+* `user_id` (FK)
+* `meals_donated` (int)
+* `meals_distributed` (int)
+* `deliveries_completed` (int)
+
+---
+
+## 9. Timeline & Milestones
+
+| Week | Milestone                                                             |
+| ---- | --------------------------------------------------------------------- |
+| 1    | Setup Supabase backend + auth, role-based dashboards, donation form   |
+| 2    | Donation discovery feed + claim flow, interactive map, status updates |
+| 3    | Notification system, basic impact dashboard, admin panel              |
+| 4    | UI polish, testing, bug fixing, final submission                      |
+
+---
+
+## 10. Success Metrics (KPIs)
+
+* Number of donations created
+* Number of donations claimed & delivered
+* Active users by role (Donor, NGO, Volunteer)
+* Volunteer pickups completed
+* Meals donated & served (tracked via platform)
+* User retention & engagement rates
+* Average donation size & frequency
+
+---
+
+## 11. Risks & Mitigation
+
+| Risk                     | Mitigation Strategy                                 |
+| ------------------------ | --------------------------------------------------- |
+| Spam or fake donations   | Email verification, CAPTCHA, admin verification     |
+| Incomplete or false info | Mandatory fields, photo upload, community reporting |
+| Volunteer no-shows       | Volunteer ratings, incentivization via points       |
+| Location accuracy        | Use GPS + map pin-drop, confirm addresses via QR    |
+| Scaling backend traffic  | Optimize queries, use caching, Supabase realtime    |
+
+---
+
+## 12. Future Growth & Monetization Ideas
+
+* CSR partnership dashboards for corporates
+* Premium NGO analytics & volunteer management
+* Donation logistics optimization (route planning)
+* Volunteer rewards & merchandise shop
+* Integration with local government schemes & food safety regulations
+
+---
+
+# ⚡ Closing Statement
+
+Pranjul bhai, **ANNAPURNA** isn’t just a hackathon project—it’s a blueprint for a hunger-free future powered by tech and humanity. With this PRD, you’ve got the roadmap, tech stack, and vision clear to build an app that doesn’t just work but **makes a meaningful dent**.
+
+If you want, I can help break this down further into **detailed UI wireframes, API contracts, or code templates** — just holla!
+
+---
+
+Ready to build India’s most badass food donation platform? Let’s crush it! 🌾🔥
+
+---
+
+How’s this? Want me to help draft wireframes or jump into some React component scaffolding next?

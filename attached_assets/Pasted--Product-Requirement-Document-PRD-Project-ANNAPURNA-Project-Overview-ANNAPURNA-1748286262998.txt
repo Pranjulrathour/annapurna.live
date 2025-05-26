@@ -1,0 +1,135 @@
+# 🧾 Product Requirement Document (PRD) — Project ANNAPURNA
+
+## 📌 Project Overview
+
+**ANNAPURNA** is a real-time food donation and distribution platform that connects donors (individuals, restaurants, canteens) with NGOs and volunteers to reduce food wastage and feed the needy. Built using ReactJS, NodeJS, and Supabase, it aims to create a movement around hunger eradication with a seamless and rewarding experience for all stakeholders.
+
+---
+
+## 👥 User Personas
+
+### 👤 Persona 1: **Individual Donor**
+
+* Wants to donate extra/home-cooked food or leftovers.
+* Needs an easy-to-use platform to list donations and get updates.
+
+### 🏢 Persona 2: **NGO / Organization / Canteen**
+
+* Actively looks for food to distribute among the needy.
+* Can also donate food in bulk (canteens/restaurants).
+* Requires verification, tracking, and history features.
+
+### 🧍 Persona 3: **Volunteer**
+
+* Picks up food from donors and delivers to NGOs or distribution points.
+* Seeks recognition, points, and social impact tracking.
+
+---
+
+## 🚀 MVP Features (High Priority)
+
+These are the must-have features to validate the idea and ensure a functional core experience.
+
+### 🔐 User Roles & Authentication
+
+* Email/password login via Supabase
+* Role selection during signup (Donor / NGO / Volunteer)
+* Role-based dashboard
+
+### 📤 Food Donation (Donor Flow)
+
+* Donation form: food type, quantity, expiry, pickup location, image
+* View live status: Submitted → Claimed → Picked up/Delivered
+* Donation history (basic list)
+
+### 📍 Discovery & Claim (NGO/Volunteer Flow)
+
+* Nearby donations feed
+* Interactive map with clickable pins
+* Claim donation + status updates
+
+### 🔔 Real-Time Notifications
+
+* Donor: "Your donation has been claimed" / "Pickup complete"
+* NGO: "New donation nearby"
+
+### 📊 Impact Dashboard (Basic)
+
+* Donor: total meals donated, last donation
+* NGO: meals served, pickups completed
+
+### 🛠️ Admin Panel (Basic)
+
+* View users by role
+* Approve/verify NGOs and Volunteers
+* Basic reporting (total donations)
+
+---
+
+## ✨ Phase 2 Features (Post-MVP / Nice-to-Have)
+
+These will enhance user experience and scale the platform.
+
+### 📲 Mobile Optimization & PWA Support
+
+* Fully responsive mobile UI with TailwindCSS
+* Optional offline donation form (localStorage)
+
+### 🧾 Volunteer Leaderboard
+
+* Points for pickups, bonuses for urgent deliveries
+* Top volunteers with badges
+
+### 📣 Social Sharing
+
+* Custom share card: “I just helped feed 10 people with Annapurna! 🌾”
+* Share on WhatsApp, Instagram, LinkedIn, X
+
+### 🔍 Advanced Analytics
+
+* City-wise donations & impact
+* Volunteer activity heatmap (future add-on)
+
+### 📎 QR Code Pickup Verification
+
+* Donor generates a QR
+* Volunteer scans to confirm pickup
+
+### 🧑‍💻 PDF Report Generator
+
+* Auto-generate downloadable impact reports for Donors and NGOs
+
+### 🌚 Dark Mode Toggle
+
+* Toggle UI for accessibility and aesthetics
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend**: ReactJS + TailwindCSS
+* **Backend**: NodeJS + Express
+* **Database & Auth**: Supabase
+* **Notifications**: EmailJS, optional Twilio for SMS
+* **PWA Support**: Service Workers + Local Storage Sync (optional)
+
+---
+
+## 📅 Timeline (Suggested for Hackathon MVP)
+
+| Week | Milestone                                            |
+| ---- | ---------------------------------------------------- |
+| 1    | Auth + Role Dashboards + Donation Form               |
+| 2    | Discovery + Claim Flow + Status Updates              |
+| 3    | Notifications + Basic Impact Dashboard + Admin Panel |
+| 4    | Polish UI + Final Testing + Submission               |
+
+---
+
+## ✅ Goal
+
+Launch an MVP during hackathon that allows individuals to donate food, NGOs to discover and claim it, and volunteers to transport it — all in real time, with minimal friction.
+
+---
+
+> Let's not just build an app. Let's feed a revolution. 🌾
