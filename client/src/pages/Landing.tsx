@@ -51,7 +51,7 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-20 pb-32">
+      <section className="relative z-10 pt-20 pb-80 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <motion.h1 
@@ -139,6 +139,91 @@ export default function Landing() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Happy Children Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-100 to-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h2 className="text-4xl font-bold text-neutral mb-4">Every Meal Brings Smiles</h2>
+            <p className="text-xl text-gray-600">See the joy you create with every donation</p>
+          </motion.div>
+        </div>
+        
+        {/* First Row - Moving Right */}
+        <div className="relative mb-8">
+          <motion.div 
+            animate={{ x: [0, -1920] }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="flex gap-6 w-max"
+          >
+            {[
+              "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80",
+              "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80",
+              "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&q=80",
+              "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80",
+              "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=80",
+              "https://images.unsplash.com/photo-1566004100631-35d015d6a491?w=400&q=80",
+              "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80",
+              "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80",
+              "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&q=80",
+              "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80"
+            ].map((image, index) => (
+              <motion.div
+                key={`row1-${index}`}
+                whileHover={{ scale: 1.05 }}
+                className="flex-shrink-0 w-64 h-48 rounded-2xl overflow-hidden shadow-lg"
+              >
+                <img
+                  src={image}
+                  alt={`Happy child enjoying meal ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Second Row - Moving Left */}
+        <div className="relative">
+          <motion.div 
+            animate={{ x: [-1920, 0] }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="flex gap-6 w-max"
+          >
+            {[
+              "https://images.unsplash.com/photo-1594736797933-d0f31ba22234?w=400&q=80",
+              "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=400&q=80",
+              "https://images.unsplash.com/photo-1505682634904-d7c8d95cdc50?w=400&q=80",
+              "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80",
+              "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&q=80",
+              "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80",
+              "https://images.unsplash.com/photo-1594736797933-d0f31ba22234?w=400&q=80",
+              "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=400&q=80",
+              "https://images.unsplash.com/photo-1505682634904-d7c8d95cdc50?w=400&q=80",
+              "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"
+            ].map((image, index) => (
+              <motion.div
+                key={`row2-${index}`}
+                whileHover={{ scale: 1.05 }}
+                className="flex-shrink-0 w-64 h-48 rounded-2xl overflow-hidden shadow-lg"
+              >
+                <img
+                  src={image}
+                  alt={`Children sharing meals ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
