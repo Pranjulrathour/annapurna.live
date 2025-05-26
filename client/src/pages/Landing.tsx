@@ -96,7 +96,7 @@ export default function Landing() {
                 onClick={handleGetStarted}
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-xl"
+                className="border-white/30 hover:bg-white/10 px-8 py-4 text-lg font-semibold rounded-xl text-[#ffffff] bg-[#ab9947]"
               >
                 Find Food <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
