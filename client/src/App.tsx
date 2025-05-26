@@ -3,38 +3,35 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/Landing";
 import Dashboard from "@/pages/Dashboard";
-import SupabaseConfig from "@/components/SupabaseConfig";
+import DonorDashboard from "@/pages/DonorDashboard";
+import NGODashboard from "@/pages/NGODashboard";
+import VolunteerDashboard from "@/pages/VolunteerDashboard";
+import AdminDashboard from "@/pages/AdminDashboard";
 
 function Router() {
-  const [isSupabaseConfigured, setIsSupabaseConfigured] = useState(false);
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, profile } = useAuth();
 
-  useEffect(() => {
-    // Check if Supabase credentials are configured
-    const hasUrl = import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_URL !== 'https://placeholder.supabase.co';
-    const hasKey = import.meta.env.VITE_SUPABASE_ANON_KEY && import.meta.env.VITE_SUPABASE_ANON_KEY !== 'placeholder-anon-key';
-    setIsSupabaseConfigured(hasUrl && hasKey);
-  }, []);
-
-  const handleSupabaseConfig = (url: string, anonKey: string) => {
-    // Store credentials in localStorage for immediate use
-    localStorage.setItem('VITE_SUPABASE_URL', url);
-    localStorage.setItem('VITE_SUPABASE_ANON_KEY', anonKey);
-    setIsSupabaseConfigured(true);
+  // Route users to their role-specific dashboard
+  const getDashboardComponent = () => {
+    if (!profile) return Dashboard;
     
-    // Show success message
-    alert('Supabase configured successfully! Please refresh the page to complete the setup.');
+    switch (profile.role) {
+      case 'donor':
+        return DonorDashboard;
+      case 'ngo':
+        return NGODashboard;
+      case 'volunteer':
+        return VolunteerDashboard;
+      case 'admin':
+        return AdminDashboard;
+      default:
+        return Dashboard;
+    }
   };
-
-  // Show Supabase configuration if not set up
-  if (!isSupabaseConfigured) {
-    return <SupabaseConfig onSave={handleSupabaseConfig} />;
-  }
 
   return (
     <Switch>
@@ -42,7 +39,11 @@ function Router() {
         <Route path="/" component={Landing} />
       ) : (
         <>
-          <Route path="/" component={Dashboard} />
+          <Route path="/" component={getDashboardComponent()} />
+          <Route path="/donor" component={DonorDashboard} />
+          <Route path="/ngo" component={NGODashboard} />
+          <Route path="/volunteer" component={VolunteerDashboard} />
+          <Route path="/admin" component={AdminDashboard} />
         </>
       )}
       <Route component={NotFound} />

@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Sprout, Heart, HandHeart, Users, MapPin, TrendingUp, ArrowRight, Star, Globe, Shield } from "lucide-react";
+import AuthModal from "@/components/AuthModal";
 
 export default function Landing() {
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
   const handleGetStarted = () => {
-    // Will be updated to use Supabase auth
-    console.log("Get started clicked");
+    setShowAuthModal(true);
   };
 
   // Floating food cards data
@@ -503,6 +506,12 @@ export default function Landing() {
           </div>
         </div>
       </footer>
+
+      {/* Authentication Modal */}
+      <AuthModal 
+        isOpen={showAuthModal} 
+        onClose={() => setShowAuthModal(false)} 
+      />
     </div>
   );
 }
