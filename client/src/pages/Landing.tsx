@@ -102,8 +102,8 @@ export default function Landing() {
               </Button>
             </motion.div>
 
-            {/* Floating Food Cards */}
-            <div className="relative mt-16">
+            {/* Floating Food Cards - Hidden on Mobile */}
+            <div className="relative mt-16 hidden md:block">
               {floatingFoods.map((food, index) => (
                 <motion.div
                   key={food.id}
@@ -164,16 +164,16 @@ export default function Landing() {
             className="flex gap-6 w-max"
           >
             {[
-              "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80",
-              "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80",
-              "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&q=80",
-              "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80",
-              "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=400&q=80",
-              "https://images.unsplash.com/photo-1566004100631-35d015d6a491?w=400&q=80",
-              "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=400&q=80",
-              "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80",
-              "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&q=80",
-              "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80"
+              "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "https://images.unsplash.com/photo-1562709902-31c9a3b1ad5c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZvb2QlMjBkb25hdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+              "https://images.unsplash.com/photo-1708417144747-b03e02a2459f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGZvb2QlMjBkb25hdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+              "https://images.unsplash.com/photo-1619410717591-92da0262985c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHBvb3IlMjBjaGlsZHJlbiUyMHNtaWxpbmd8ZW58MHx8MHx8fDA%3D",
+              "https://images.unsplash.com/photo-1706025233736-4f9bbc53306c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHBvb3IlMjBjaGlsZHJlbiUyMHNtaWxpbmd8ZW58MHx8MHx8fDA%3D",
+              "https://images.unsplash.com/flagged/photo-1555251255-e9a095d6eb9d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "https://images.unsplash.com/photo-1562709902-31c9a3b1ad5c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZvb2QlMjBkb25hdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+              "https://images.unsplash.com/photo-1708417144747-b03e02a2459f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGZvb2QlMjBkb25hdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+              "https://images.unsplash.com/photo-1619410717591-92da0262985c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHBvb3IlMjBjaGlsZHJlbiUyMHNtaWxpbmd8ZW58MHx8MHx8fDA%3D"
             ].map((image, index) => (
               <motion.div
                 key={`row1-${index}`}
@@ -199,16 +199,16 @@ export default function Landing() {
             className="flex gap-6 w-max"
           >
             {[
-              "https://images.unsplash.com/photo-1594736797933-d0f31ba22234?w=400&q=80",
-              "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=400&q=80",
-              "https://images.unsplash.com/photo-1505682634904-d7c8d95cdc50?w=400&q=80",
-              "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80",
-              "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&q=80",
-              "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&q=80",
-              "https://images.unsplash.com/photo-1594736797933-d0f31ba22234?w=400&q=80",
-              "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=400&q=80",
-              "https://images.unsplash.com/photo-1505682634904-d7c8d95cdc50?w=400&q=80",
-              "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"
+              "https://images.unsplash.com/photo-1710092784814-4a6f158913b8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGZvb2QlMjBkb25hdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+              "https://images.unsplash.com/flagged/photo-1555251255-e9a095d6eb9d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "https://images.unsplash.com/photo-1706025233736-4f9bbc53306c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHBvb3IlMjBjaGlsZHJlbiUyMHNtaWxpbmd8ZW58MHx8MHx8fDA%3D",
+              "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "https://images.unsplash.com/photo-1562709902-31c9a3b1ad5c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZvb2QlMjBkb25hdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+              "https://images.unsplash.com/photo-1708417144747-b03e02a2459f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGZvb2QlMjBkb25hdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+              "https://images.unsplash.com/photo-1710092784814-4a6f158913b8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGZvb2QlMjBkb25hdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
+              "https://images.unsplash.com/flagged/photo-1555251255-e9a095d6eb9d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "https://images.unsplash.com/photo-1706025233736-4f9bbc53306c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHBvb3IlMjBjaGlsZHJlbiUyMHNtaWxpbmd8ZW58MHx8MHx8fDA%3D",
+              "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             ].map((image, index) => (
               <motion.div
                 key={`row2-${index}`}
