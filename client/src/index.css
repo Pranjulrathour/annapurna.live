@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 11% 98%;
+  --foreground: 210 11% 15%;
+  --muted: 210 11% 93%;
+  --muted-foreground: 210 11% 45%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 210 11% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 210 11% 15%;
+  --border: 210 11% 88%;
+  --input: 210 11% 88%;
+  --primary: 178 70% 42%; /* #20B2AA - Teal */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 17 88% 59%; /* #FF6B35 - Orange */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 178 56% 64%; /* #4ECDC4 - Light Teal */
+  --accent-foreground: 210 11% 15%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 178 70% 42%;
+  --radius: 0.5rem;
+  --success: 142 71% 45%; /* #48BB78 - Green */
+  --warning: 25 85% 57%; /* #ED8936 - Yellow-Orange */
+  --neutral: 210 11% 23%; /* #2D3748 - Dark Gray */
+}
+
+.dark {
+  --background: 210 11% 7%;
+  --foreground: 0 0% 98%;
+  --muted: 210 11% 15%;
+  --muted-foreground: 210 11% 60%;
+  --popover: 210 11% 7%;
+  --popover-foreground: 0 0% 98%;
+  --card: 210 11% 7%;
+  --card-foreground: 0 0% 98%;
+  --border: 210 11% 15%;
+  --input: 210 11% 15%;
+  --primary: 178 70% 42%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 17 88% 59%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 178 56% 64%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 178 70% 42%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .gradient-bg {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+  }
+  
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .status-pulse {
+    animation: pulse 2s infinite;
+  }
+
+  .text-neutral {
+    color: hsl(var(--neutral));
+  }
+
+  .bg-neutral {
+    background-color: hsl(var(--neutral));
+  }
+
+  .text-success {
+    color: hsl(var(--success));
+  }
+
+  .bg-success {
+    background-color: hsl(var(--success));
+  }
+
+  .text-warning {
+    color: hsl(var(--warning));
+  }
+
+  .bg-warning {
+    background-color: hsl(var(--warning));
+  }
+}
