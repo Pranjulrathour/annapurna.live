@@ -30,25 +30,25 @@
 }
 
 .dark {
-  /* Dark theme color scheme for Annapurna Nutrition app */
-  --background: 222 47% 11%; /* #0c1420 - Deep blue-black */
-  --foreground: 210 40% 98%; /* #f5f9ff - Off white */
+  /* Dark theme color scheme for Annapurna Nutrition app - clean black background */
+  --background: 0 0% 0%; /* #000000 - Pure black */
+  --foreground: 0 0% 98%; /* #fafafa - Off white */
   
   /* Card and popover elements */
-  --card: 215 28% 17%; /* #162032 - Deep blue-black, slightly lighter than bg */
-  --card-foreground: 210 40% 98%; /* #f5f9ff - Off white */
-  --popover: 215 28% 17%; /* #162032 - Same as card */
-  --popover-foreground: 210 40% 98%; /* #f5f9ff - Off white */
+  --card: 0 0% 7%; /* #121212 - Slightly lighter black for cards */
+  --card-foreground: 0 0% 98%; /* #fafafa - Off white */
+  --popover: 0 0% 7%; /* #121212 - Same as card */
+  --popover-foreground: 0 0% 98%; /* #fafafa - Off white */
   
   /* Borders and inputs */
-  --border: 214 32% 26%; /* #253247 - Slate blue, slightly lighter */  
-  --input: 214 32% 26%; /* #253247 - Slate blue */
+  --border: 0 0% 15%; /* #262626 - Dark gray for borders */  
+  --input: 0 0% 15%; /* #262626 - Dark gray for inputs */
   --ring: 16 92% 58%; /* #ff4f2b - Bright orange */
   --radius: 0.75rem;
   
   /* Muted elements */
-  --muted: 215 27% 20%; /* #192437 - Deep blue-gray */
-  --muted-foreground: 210 40% 80%; /* #b3c5e6 - Muted blue-white */
+  --muted: 0 0% 12%; /* #1e1e1e - Dark gray for muted backgrounds */
+  --muted-foreground: 0 0% 70%; /* #b3b3b3 - Muted gray text */
   
   /* Primary color - warm orange */
   --primary: 16 92% 58%; /* #ff4f2b - Bright orange */

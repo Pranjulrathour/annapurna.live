@@ -20,23 +20,29 @@ export function DarkModeStyles() {
     
     // Custom styles that are difficult to apply with Tailwind
     styleTag.innerHTML = `
+      /* Set html and body background to pure black */
+      html.dark,
+      .dark body {
+        background-color: #000000 !important;
+      }
+      
       /* Enhanced Scrollbars for Dark Mode */
       .dark ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
       }
       
       .dark ::-webkit-scrollbar-track {
-        background: hsl(var(--muted)); 
+        background: #0a0a0a; 
       }
       
       .dark ::-webkit-scrollbar-thumb {
-        background: hsl(var(--border));
-        border-radius: 5px;
+        background: #333333;
+        border-radius: 4px;
       }
       
       .dark ::-webkit-scrollbar-thumb:hover {
-        background: hsl(var(--accent));
+        background: hsl(var(--primary));
       }
       
       /* Placeholder Text Color */

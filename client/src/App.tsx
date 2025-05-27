@@ -78,7 +78,7 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <DarkModeStyles />
-              <div className="min-h-screen bg-background text-foreground">
+              <div className="min-h-screen dark:bg-background bg-background text-foreground dark:text-foreground">
                 <Router />
               </div>
             </TooltipProvider>
