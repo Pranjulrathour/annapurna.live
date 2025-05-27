@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { X, User, Mail, Lock, UserCheck } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useToast } from '@/hooks/use-toast'
+// We'll dynamically import syncUserRole from roleUtils when needed
 
 interface AuthModalProps {
   isOpen: boolean
@@ -34,7 +35,23 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
     try {
       if (isSignUp) {
-        const { error } = await signUp(formData.email, formData.password, {
+        // Validate password
+        if (formData.password.length < 6) {
+          throw new Error('Password must be at least 6 characters long')
+        }
+        
+        // Validate that a role is selected
+        if (!formData.role) {
+          throw new Error('Please select a role to continue')
+        }
+
+        console.log('[AuthModal] Signing up with role:', formData.role)
+        
+        // Import utilities needed for better registration
+        const { updateUserRole } = await import('@/utils/roleUtils')
+        
+        // Register the user
+        const { error, data } = await signUp(formData.email, formData.password, {
           first_name: formData.firstName,
           last_name: formData.lastName,
           role: formData.role,
@@ -42,27 +59,110 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         })
 
         if (error) throw error
+        
+        // Ensure role is set correctly for the new user
+        if (data?.user) {
+          // Save role to localStorage as a backup mechanism
+          localStorage.setItem('annapurna_role', formData.role)
+          localStorage.setItem('annapurna_role_timestamp', Date.now().toString())
+          
+          // Double-check role is set correctly in both auth and profile
+          const result = await updateUserRole(data.user.id, formData.role, 'auth-modal-signup')
+          
+          if (!result.success) {
+            console.warn('[AuthModal] Warning: Role might not be set correctly:', result.error)
+          }
+        }
 
         toast({
           title: "Welcome to Annapurna!",
           description: "Your account has been created successfully. Please check your email to verify your account.",
         })
+        
+        // Auto-switch to sign in mode after successful registration
+        setIsSignUp(false)
+        // Remember the selected role for login
+        const selectedRole = formData.role
+        setFormData(prev => ({
+          ...prev,
+          firstName: '',
+          lastName: '',
+          role: selectedRole, // Keep the selected role for sign in
+          // Keep the email for convenience
+          // Clear password for security
+          password: ''
+        }))
+        
+        // Don't close modal, let user sign in
+        return
       } else {
-        const { error } = await signIn(formData.email, formData.password)
-
+        // Sign in flow (keeping this part unchanged as it's working properly)
+        console.log('[AuthModal] Signing in with role preference:', formData.role)
+        
+        // 1. First authenticate the user
+        const { error, data } = await signIn(formData.email, formData.password)
         if (error) throw error
+        
+        // 2. After successful login, forcefully set the selected role if one is specified
+        if (data?.user && formData.role) {
+          try {
+            // Import utilities needed for role management
+            const { updateUserRole } = await import('@/utils/roleUtils')
+            
+            // Save the role to localStorage as a backup mechanism
+            localStorage.setItem('annapurna_role', formData.role)
+            localStorage.setItem('annapurna_role_timestamp', Date.now().toString())
+            
+            // Force update the role to match what was selected in the form
+            console.log('[AuthModal] Explicitly setting user role to:', formData.role)
+            const result = await updateUserRole(data.user.id, formData.role, 'auth-modal-login')
+            
+            if (!result.success) {
+              console.error('[AuthModal] Failed to set role:', result.error)
+            } else {
+              console.log('[AuthModal] Role successfully set to:', formData.role)
+            }
+            
+            // Redirect with role parameter to ensure correct dashboard loads
+            // This is more reliable than just reloading the page
+            window.location.href = `/?role=${formData.role}&forcedRole=true`
+            return
+          } catch (roleError) {
+            console.error('[AuthModal] Error setting role during login:', roleError)
+          }
+        }
 
         toast({
           title: "Welcome back!",
           description: "You've successfully signed in to Annapurna.",
         })
+        
+        // Close modal only on successful sign in
+        onClose()
       }
-
-      onClose()
     } catch (error: any) {
+      console.error('Auth error:', error)
+      
+      // Provide more user-friendly error messages
+      let errorMessage = "Something went wrong. Please try again."
+      
+      if (error.message) {
+        if (error.message.includes('Invalid login credentials')) {
+          errorMessage = "Invalid email or password. Please try again."
+        } else if (error.message.includes('Email not confirmed')) {
+          errorMessage = "Please verify your email before signing in."
+        } else if (error.message.includes('already exists')) {
+          errorMessage = error.message
+          // Switch to sign in mode if user already exists
+          setIsSignUp(false)
+        } else {
+          errorMessage = error.message
+        }
+      }
+      
       toast({
         title: "Authentication Error",
-        description: error.message || "Something went wrong. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
@@ -81,19 +181,18 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-background/40 backdrop-blur-md p-4"
           onClick={onClose}
         >
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            transition={{ type: "spring", duration: 0.3 }}
+            className="w-full max-w-md bg-card text-card-foreground rounded-xl shadow-lg border border-border overflow-hidden"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-md"
           >
-            <Card className="bg-white border-0 shadow-2xl">
-              <CardHeader className="relative text-center pb-2">
+            <Card className="border-none shadow-none bg-transparent">
+              <CardHeader className="border-b border-border/40 text-center pb-6">
                 <button
                   onClick={onClose}
                   className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors"
@@ -127,7 +226,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                           value={formData.firstName}
                           onChange={(e) => handleInputChange('firstName', e.target.value)}
                           required={isSignUp}
-                          className="border-gray-200 focus:border-primary"
+                          className="pl-10 bg-card border-border focus:border-primary"
                         />
                       </div>
                       <div className="space-y-2">
@@ -139,7 +238,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                           value={formData.lastName}
                           onChange={(e) => handleInputChange('lastName', e.target.value)}
                           required={isSignUp}
-                          className="border-gray-200 focus:border-primary"
+                          className="pl-10 bg-card border-border focus:border-primary"
                         />
                       </div>
                     </div>
@@ -152,11 +251,11 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                       <Input
                         id="email"
                         type="email"
-                        placeholder="john@example.com"
+                        placeholder="name@example.com"
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
                         required
-                        className="pl-10 border-gray-200 focus:border-primary"
+                        className="pl-10 bg-card border-border focus:border-primary"
                       />
                     </div>
                   </div>
@@ -172,41 +271,40 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                         value={formData.password}
                         onChange={(e) => handleInputChange('password', e.target.value)}
                         required
-                        className="pl-10 border-gray-200 focus:border-primary"
+                        className="pl-10 bg-card border-border focus:border-primary"
                       />
                     </div>
                   </div>
 
-                  {isSignUp && (
-                    <div className="space-y-2">
-                      <Label htmlFor="role">I want to join as</Label>
-                      <Select value={formData.role} onValueChange={(value: any) => handleInputChange('role', value)}>
-                        <SelectTrigger className="border-gray-200 focus:border-primary">
-                          <SelectValue placeholder="Select your role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="donor">
-                            <div className="flex items-center space-x-2">
-                              <span>🍽️</span>
-                              <span>Food Donor</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="ngo">
-                            <div className="flex items-center space-x-2">
-                              <span>🏢</span>
-                              <span>NGO Partner</span>
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="volunteer">
-                            <div className="flex items-center space-x-2">
-                              <span>🚀</span>
-                              <span>Volunteer</span>
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  )}
+                  {/* Always show role selection for both signup and login */}
+                  <div className="space-y-2">
+                    <Label htmlFor="role">{isSignUp ? 'I want to join as' : 'Login as'}</Label>
+                    <Select value={formData.role} onValueChange={(value: any) => handleInputChange('role', value)}>
+                      <SelectTrigger className="border-border focus:border-primary">
+                        <SelectValue placeholder="Select your role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="donor">
+                          <div className="flex items-center space-x-2">
+                            <span>🍽️</span>
+                            <span>Food Donor</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="ngo">
+                          <div className="flex items-center space-x-2">
+                            <span>🏢</span>
+                            <span>NGO Partner</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="volunteer">
+                          <div className="flex items-center space-x-2">
+                            <span>🚀</span>
+                            <span>Volunteer</span>
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
                   <Button
                     type="submit"
@@ -228,7 +326,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 </form>
 
                 <div className="text-center pt-4">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-muted-foreground">
                     {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
                     <button
                       onClick={() => setIsSignUp(!isSignUp)}

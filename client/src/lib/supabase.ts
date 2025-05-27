@@ -1,11 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 
-  (typeof window !== 'undefined' ? localStorage.getItem('VITE_SUPABASE_URL') : null) || 
-  'https://placeholder.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 
-  (typeof window !== 'undefined' ? localStorage.getItem('VITE_SUPABASE_ANON_KEY') : null) || 
-  'placeholder-anon-key'
+// Default values for development - in production, these should be set in environment variables
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://bglndjumihlkxppgzbbs.supabase.co'
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnbG5kanVtaWhsa3hwcGd6YmJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgyODgyNzYsImV4cCI6MjA2Mzg2NDI3Nn0.dcA2-kXi20mFpnmNgdsgcRZCAtdVRW5DOCh832H3Wjg'
+
+// Log for debugging
+console.log('Supabase URL:', supabaseUrl)
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
@@ -17,6 +17,12 @@ export type Profile = {
   last_name?: string
   role: 'donor' | 'ngo' | 'volunteer' | 'admin'
   verified: boolean
+  phone?: string
+  organization_name?: string
+  address?: string
+  latitude?: number
+  longitude?: number
+  profile_image_url?: string
   created_at: string
   updated_at: string
 }

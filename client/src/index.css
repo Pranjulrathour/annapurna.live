@@ -30,28 +30,59 @@
 }
 
 .dark {
-  --background: 210 11% 7%;
-  --foreground: 0 0% 98%;
-  --muted: 210 11% 15%;
-  --muted-foreground: 210 11% 60%;
-  --popover: 210 11% 7%;
-  --popover-foreground: 0 0% 98%;
-  --card: 210 11% 7%;
-  --card-foreground: 0 0% 98%;
-  --border: 210 11% 15%;
-  --input: 210 11% 15%;
-  --primary: 178 70% 42%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 17 88% 59%;
-  --secondary-foreground: 0 0% 100%;
-  --accent: 178 56% 64%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62% 30%;
-  --destructive-foreground: 0 0% 98%;
-  --ring: 178 70% 42%;
+  /* Dark theme color scheme for Annapurna Nutrition app */
+  --background: 222 47% 11%; /* #0c1420 - Deep blue-black */
+  --foreground: 210 40% 98%; /* #f5f9ff - Off white */
+  
+  /* Card and popover elements */
+  --card: 215 28% 17%; /* #162032 - Deep blue-black, slightly lighter than bg */
+  --card-foreground: 210 40% 98%; /* #f5f9ff - Off white */
+  --popover: 215 28% 17%; /* #162032 - Same as card */
+  --popover-foreground: 210 40% 98%; /* #f5f9ff - Off white */
+  
+  /* Borders and inputs */
+  --border: 214 32% 26%; /* #253247 - Slate blue, slightly lighter */  
+  --input: 214 32% 26%; /* #253247 - Slate blue */
+  --ring: 16 92% 58%; /* #ff4f2b - Bright orange */
+  --radius: 0.75rem;
+  
+  /* Muted elements */
+  --muted: 215 27% 20%; /* #192437 - Deep blue-gray */
+  --muted-foreground: 210 40% 80%; /* #b3c5e6 - Muted blue-white */
+  
+  /* Primary color - warm orange */
+  --primary: 16 92% 58%; /* #ff4f2b - Bright orange */
+  --primary-foreground: 210 40% 98%; /* #f5f9ff - Off white */
+  
+  /* Secondary color - forest green */
+  --secondary: 142 71% 35%; /* #1db954 - Forest green */
+  --secondary-foreground: 0 0% 100%; /* #ffffff - Pure white */
+  
+  /* Accent color - teal */
+  --accent: 174 71% 46%; /* #18bdac - Teal */
+  --accent-foreground: 210 40% 98%; /* #f5f9ff - Off white */
+  
+  /* Status colors */
+  --success: 142 71% 35%; /* #1db954 - Forest green */
+  --success-foreground: 0 0% 100%; /* #ffffff - Pure white */
+  --warning: 32 94% 60%; /* #f7a531 - Amber */
+  --warning-foreground: 0 0% 0%; /* #000000 - Pure black */
+  --destructive: 0 84% 60%; /* #f03e3e - Red */
+  --destructive-foreground: 0 0% 98%; /* #fafafa - Off white */
+  --info: 201 96% 58%; /* #0ca8fd - Bright blue */
+  --info-foreground: 0 0% 98%; /* #fafafa - Off white */
 }
 
 @layer base {
+  /* Force dark mode by default for the entire app */
+  :root {
+    color-scheme: dark;
+  }
+  
+  html {
+    @apply dark;
+  }
+
   * {
     @apply border-border;
   }

@@ -22,7 +22,7 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-background relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
@@ -31,7 +31,7 @@ export default function Landing() {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
+      <nav className="relative z-50 bg-background/60 backdrop-blur-md border-b border-border/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -433,11 +433,11 @@ export default function Landing() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-neutral mb-4">How Annapurna Works</h2>
-            <p className="text-xl text-gray-600">Simple steps to make a big impact</p>
+            <h2 className="text-3xl font-bold text-foreground mb-4">How Annapurna Works</h2>
+            <p className="text-xl text-muted-foreground">Simple steps to make a big impact</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -446,8 +446,8 @@ export default function Landing() {
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                   <Heart className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-neutral mb-2">Donate Food</h3>
-                <p className="text-gray-600">List your surplus food with photos and pickup details. Help reduce waste while feeding the hungry.</p>
+                <h3 className="text-xl font-semibold text-foreground mb-2">Donate Food</h3>
+                <p className="text-muted-foreground">List your surplus food with photos and pickup details. Help reduce waste while feeding the hungry.</p>
               </CardContent>
             </Card>
 
@@ -456,8 +456,8 @@ export default function Landing() {
                 <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
                   <MapPin className="h-6 w-6 text-secondary" />
                 </div>
-                <h3 className="text-xl font-semibold text-neutral mb-2">Find & Claim</h3>
-                <p className="text-gray-600">NGOs and volunteers discover nearby donations on our interactive map and claim pickups.</p>
+                <h3 className="text-xl font-semibold text-foreground mb-2">Find & Claim</h3>
+                <p className="text-muted-foreground">NGOs and volunteers discover nearby donations on our interactive map and claim pickups.</p>
               </CardContent>
             </Card>
 
@@ -466,8 +466,8 @@ export default function Landing() {
                 <div className="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center mb-4">
                   <TrendingUp className="h-6 w-6 text-success" />
                 </div>
-                <h3 className="text-xl font-semibold text-neutral mb-2">Track Impact</h3>
-                <p className="text-gray-600">Monitor your contributions with real-time updates and see the lives you're changing.</p>
+                <h3 className="text-xl font-semibold text-foreground mb-2">Track Impact</h3>
+                <p className="text-muted-foreground">Monitor your contributions with real-time updates and see the lives you're changing.</p>
               </CardContent>
             </Card>
           </div>
@@ -475,7 +475,7 @@ export default function Landing() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-neutral text-white">
+      <section className="py-16 bg-muted/50 text-foreground">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Make a Difference?</h2>
           <p className="text-xl text-gray-300 mb-8">
@@ -493,7 +493,7 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-neutral text-white py-8">
+      <footer className="bg-muted/30 text-foreground py-8 border-t border-border/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -502,7 +502,7 @@ export default function Landing() {
               </div>
               <span className="ml-2 text-xl font-semibold">Annapurna</span>
             </div>
-            <p className="text-gray-300">© 2024 Annapurna. Made with ❤️ for fighting hunger.</p>
+            <p className="text-muted-foreground">© 2024 Annapurna. Made with ❤️ for fighting hunger.</p>
           </div>
         </div>
       </footer>

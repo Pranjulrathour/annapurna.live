@@ -11,11 +11,12 @@ import { useDonations } from '@/hooks/useDonations'
 import { useToast } from '@/hooks/use-toast'
 
 interface DonationFormProps {
-  isOpen: boolean
+  isOpen?: boolean
   onClose: () => void
+  onSuccess?: () => void
 }
 
-export default function DonationForm({ isOpen, onClose }: DonationFormProps) {
+export default function DonationForm({ isOpen = true, onClose, onSuccess }: DonationFormProps) {
   const [formData, setFormData] = useState({
     food_type: '',
     quantity: '',
@@ -106,7 +107,13 @@ export default function DonationForm({ isOpen, onClose }: DonationFormProps) {
         dietary_info: []
       })
       setCoordinates(null)
-      onClose()
+      
+      // Call onSuccess if provided
+      if (onSuccess) {
+        onSuccess()
+      } else {
+        onClose()
+      }
     } catch (error) {
       // Error is handled in the hook
     } finally {

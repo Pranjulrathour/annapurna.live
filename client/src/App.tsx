@@ -11,6 +11,13 @@ import DonorDashboard from "@/pages/DonorDashboard";
 import NGODashboard from "@/pages/NGODashboard";
 import VolunteerDashboard from "@/pages/VolunteerDashboard";
 import AdminDashboard from "@/pages/AdminDashboard";
+import DonationDetail from "@/pages/DonationDetail";
+import ShareStats from "@/pages/ShareStats";
+import Layout from "@/components/Layout";
+import { NotificationProvider } from "@/contexts/NotificationContext";
+import { LocationProvider } from "@/contexts/LocationContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { DarkModeStyles } from "@/components/DarkModeStyles";
 
 function Router() {
   const { isAuthenticated, loading, profile } = useAuth();
@@ -33,17 +40,28 @@ function Router() {
     }
   };
 
+  // Create a wrapper component that applies the Layout
+  const WithLayout = ({ Component }: { Component: React.ComponentType }) => (
+    <Layout>
+      <Component />
+    </Layout>
+  );
+
   return (
     <Switch>
       {loading || !isAuthenticated ? (
+        // Public routes
         <Route path="/" component={Landing} />
       ) : (
+        // Protected routes with Layout
         <>
-          <Route path="/" component={getDashboardComponent()} />
-          <Route path="/donor" component={DonorDashboard} />
-          <Route path="/ngo" component={NGODashboard} />
-          <Route path="/volunteer" component={VolunteerDashboard} />
-          <Route path="/admin" component={AdminDashboard} />
+          <Route path="/" component={() => <WithLayout Component={getDashboardComponent()} />} />
+          <Route path="/donor" component={() => <WithLayout Component={DonorDashboard} />} />
+          <Route path="/ngo" component={() => <WithLayout Component={NGODashboard} />} />
+          <Route path="/volunteer" component={() => <WithLayout Component={VolunteerDashboard} />} />
+          <Route path="/admin" component={() => <WithLayout Component={AdminDashboard} />} />
+          <Route path="/donation/:id" component={() => <WithLayout Component={DonationDetail} />} />
+          <Route path="/share" component={() => <WithLayout Component={ShareStats} />} />
         </>
       )}
       <Route component={NotFound} />
@@ -54,10 +72,19 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <ThemeProvider>
+        <NotificationProvider>
+          <LocationProvider>
+            <TooltipProvider>
+              <Toaster />
+              <DarkModeStyles />
+              <div className="min-h-screen bg-background text-foreground">
+                <Router />
+              </div>
+            </TooltipProvider>
+          </LocationProvider>
+        </NotificationProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

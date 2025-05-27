@@ -1,48 +1,164 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Search, Building2, Clock } from "lucide-react";
+import { MapPin, Search, Building2, Clock, Filter, Users, Share2 } from "lucide-react";
 import DonationCard from "@/components/DonationCard";
 import ImpactStats from "@/components/ImpactStats";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import type { DonationWithDetails } from "@/lib/types";
+import { useDonations } from "@/hooks/useDonations";
+import { useAuth } from "@/hooks/useAuth";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import type { Donation } from "@/hooks/useDonations";
+import { useLocation } from "@/contexts/LocationContext";
+import { ShareButton } from "@/components/ShareButton";
 
 export default function NGODashboard() {
   const { toast } = useToast();
-  const queryClient = useQueryClient();
+  const { profile } = useAuth();
+  const { claimDonation, getNearbyDonations, loading } = useDonations();
+  
+  // Use the shared location context
+  const { 
+    userLocation, 
+    locationAddress, 
+    searchRadius, 
+    loading: locationLoading, 
+    getCurrentLocation,
+    setSearchRadius
+  } = useLocation();
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [availableDonations, setAvailableDonations] = useState<Donation[]>([]);
+  const [myClaimedDonations, setMyClaimedDonations] = useState<Donation[]>([]);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  
+  // Wrapper for location detection that includes success message
+  const handleGetLocation = async () => {
+    try {
+      const location = await getCurrentLocation();
+      if (location) {
+        toast({
+          title: "Location detected!",
+          description: "We'll show donations near you.",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Location Error",
+        description: "We'll show all available donations.",
+        variant: "destructive"
+      });
+    }
+  };
 
-  const { data: availableDonations = [] } = useQuery<DonationWithDetails[]>({
-    queryKey: ["/api/donations"],
-  });
+  // Fetch donations when component mounts or when search parameters change
+  useEffect(() => {
+    const fetchDonations = async () => {
+      try {
+        // Show loading state
+        console.log('Fetching donations with location:', userLocation);
+        
+        if (userLocation) {
+          const donations = await getNearbyDonations(userLocation.lat, userLocation.lng, searchRadius);
+          console.log('Fetched donations with location:', donations.length);
+          // Filter to only show available donations
+          setAvailableDonations(donations.filter(d => d.status === 'submitted'));
+          
+          // Set claimed donations separately
+          const myDonations = donations.filter(d => 
+            d.status !== 'submitted' && 
+            d.claim && 
+            d.claim.claimant_id === profile?.id
+          );
+          setMyClaimedDonations(myDonations);
+        } else {
+          const allDonations = await getNearbyDonations();
+          console.log('Fetched all donations:', allDonations.length);
+          // Filter to only show available donations
+          setAvailableDonations(allDonations.filter(d => d.status === 'submitted'));
+          
+          // Set claimed donations separately
+          const myDonations = allDonations.filter(d => 
+            d.status !== 'submitted' && 
+            d.claim && 
+            d.claim.claimant_id === profile?.id
+          );
+          setMyClaimedDonations(myDonations);
+        }
+      } catch (error) {
+        console.error('Error fetching donations:', error);
+      }
+    };
+    
+    // Always fetch donations when component mounts
+    fetchDonations();
+    
+    // If we don't have a location yet, try to get it once on component mount
+    if (!userLocation) {
+      // Check if we should automatically try to get location
+      const shouldAutoDetect = localStorage.getItem('annapurna_auto_detect_location') === 'true';
+      if (shouldAutoDetect) {
+        getCurrentLocation();
+      }
+    }
+  }, [userLocation, searchRadius, refreshTrigger, profile?.id]);
 
-  const { data: claims = [] } = useQuery({
-    queryKey: ["/api/claims"],
-  });
-
-  const claimMutation = useMutation({
-    mutationFn: (donationId: string) => 
-      apiRequest("POST", "/api/claims", { donationId }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/donations"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/claims"] });
+  // Handle claiming a donation
+  const handleClaimDonation = async (donationId: string) => {
+    try {
+      console.log('NGO claiming donation:', donationId);
+      // Show claiming in progress
+      const donationToUpdate = availableDonations.find(d => d.id === donationId);
+      if (!donationToUpdate) {
+        throw new Error('Donation not found');
+      }
+      
+      // Optimistically update the UI
+      setAvailableDonations(prev => prev.filter(d => d.id !== donationId));
+      
+      // Call the claim function
+      const result = await claimDonation(donationId);
+      console.log('Claim result:', result);
+      
+      // Add to my claimed list
+      if (result && profile) {
+        const claimedDonation: Donation = {
+          ...donationToUpdate,
+          status: 'claimed' as const,
+          claim: {
+            id: typeof result.data === 'object' && result.data ? (result.data.id || 'temp-id') : 'temp-id',
+            claimant_id: profile.id,
+            status: 'claimed',
+            claimed_at: new Date().toISOString(),
+            claimant: {
+              first_name: profile.first_name || '',
+              last_name: profile.last_name || '',
+              organization_name: profile.organization_name
+            }
+          }
+        };
+        setMyClaimedDonations(prev => [claimedDonation, ...prev]);
+      }
+      
       toast({
         title: "Donation claimed successfully!",
         description: "You can now coordinate pickup with volunteers.",
       });
-    },
-    onError: () => {
+      
+      // Update the donations list to ensure everything is in sync
+      setRefreshTrigger(prev => prev + 1);
+    } catch (error: any) {
+      console.error('Error claiming donation:', error);
       toast({
         title: "Failed to claim donation",
-        description: "This donation might already be claimed.",
+        description: error.message || "This donation might already be claimed.",
         variant: "destructive",
       });
-    },
-  });
-
-  const handleClaimDonation = (donationId: string) => {
-    claimMutation.mutate(donationId);
+      // Refresh in case of error to ensure UI is in sync
+      setRefreshTrigger(prev => prev + 1);
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -58,36 +174,136 @@ export default function NGODashboard() {
   return (
     <div className="space-y-8">
       {/* Welcome Header */}
-      <div className="gradient-bg rounded-2xl p-8 text-white">
+      <div className="bg-gradient-to-r from-primary/90 to-secondary/80 rounded-2xl p-8 text-white border border-primary/20 shadow-md">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div>
-            <h1 className="text-3xl font-bold mb-2">NGO Dashboard 🏢</h1>
-            <p className="text-teal-100 text-lg">Coordinate food distribution and help your community</p>
+            <div className="flex items-center gap-2 mb-1">
+              <Badge className="bg-yellow-200 text-yellow-800 hover:bg-yellow-300 transition-colors">
+                <Building2 className="h-3 w-3 mr-1" /> NGO Partner
+              </Badge>
+            </div>
+            <h1 className="text-3xl font-bold mb-2">NGO Dashboard {profile?.first_name ? `- ${profile.first_name}` : ''}</h1>
+            <p className="text-yellow-100 text-lg">Coordinate food distribution and help your community</p>
+            {locationAddress && (
+              <div className="flex items-center gap-2 mt-2 text-yellow-100">
+                <MapPin className="h-4 w-4" />
+                <span className="text-sm">{locationAddress}</span>
+              </div>
+            )}
           </div>
-          <div className="flex items-center space-x-2 mt-4 md:mt-0">
-            <div className="w-3 h-3 bg-yellow-300 rounded-full status-pulse"></div>
-            <span className="text-sm">{availableDonations.length} donations available</span>
+          <div className="flex items-center space-x-2 mt-4 md:mt-0 bg-yellow-300/20 p-3 rounded-lg">
+            <div className="w-3 h-3 bg-yellow-300 rounded-full animate-pulse"></div>
+            <span className="text-sm font-medium">{availableDonations.length} donations available</span>
           </div>
         </div>
       </div>
 
-      {/* Quick Stats */}
-      <ImpactStats />
+      {/* Impact Stats with Share Button */}
+      <div className="flex flex-col md:flex-row justify-between gap-4">
+        <div className="flex-grow">
+          <ImpactStats />
+        </div>
+        <div className="flex items-start justify-end">
+          <ShareButton 
+            variant="default" 
+            className="bg-primary hover:bg-primary/90"
+            label="Share Your Impact" 
+          />
+        </div>
+      </div>
+
+      {/* Location and Filtering */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-primary" />
+              Location Settings
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setFilterOpen(!filterOpen)}
+              className="flex items-center gap-2"
+            >
+              <Filter className="h-4 w-4" />
+              Filters
+            </Button>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col space-y-4">
+            <div className="flex items-center gap-2">
+              <Input 
+                value={userLocation ? `${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}` : ''}
+                placeholder="Set your location to see nearby donations"
+                readOnly
+                className="flex-grow"
+              />
+              <Button
+                onClick={getCurrentLocation}
+                disabled={locationLoading}
+                variant="outline"
+                className="whitespace-nowrap"
+              >
+                {locationLoading ? "Detecting..." : "Detect Location"}
+              </Button>
+            </div>
+            
+            {filterOpen && (
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="radius">
+                  <AccordionTrigger>Search Radius: {searchRadius} km</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="py-4">
+                      <Slider
+                        defaultValue={[searchRadius]}
+                        max={100}
+                        min={1}
+                        step={1}
+                        onValueChange={(values) => setSearchRadius(values[0])}
+                      />
+                      <div className="flex justify-between mt-2 text-sm text-gray-500">
+                        <span>1 km</span>
+                        <span>50 km</span>
+                        <span>100 km</span>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Available Donations */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Search className="h-5 w-5 text-primary" />
-            Available Donations Near You
+            Available Donations {userLocation ? `Within ${searchRadius}km` : 'Near You'}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {availableDonations.length === 0 ? (
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : availableDonations.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">📍</div>
               <h3 className="text-xl font-semibold text-neutral mb-2">No donations available</h3>
               <p className="text-gray-600">Check back later for new food donations in your area</p>
+              {!userLocation && (
+                <Button 
+                  onClick={handleGetLocation} 
+                  className="mt-4"
+                  variant="outline"
+                >
+                  Set Your Location
+                </Button>
+              )}
             </div>
           ) : (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -97,7 +313,7 @@ export default function NGODashboard() {
                   donation={donation} 
                   showActions={true}
                   onClaim={() => handleClaimDonation(donation.id)}
-                  claimLoading={claimMutation.isPending}
+                  claimLoading={loading}
                 />
               ))}
             </div>
@@ -114,27 +330,22 @@ export default function NGODashboard() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {claims.length === 0 ? (
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-secondary"></div>
+            </div>
+          ) : myClaimedDonations.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-gray-600">No claimed donations yet</p>
             </div>
           ) : (
-            <div className="space-y-4">
-              {claims.map((claim: any) => (
-                <div key={claim.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex items-center space-x-4">
-                    <div className={`w-3 h-3 rounded-full ${getStatusColor(claim.status)}`}></div>
-                    <div>
-                      <p className="font-medium">Claim #{claim.id.slice(0, 8)}</p>
-                      <p className="text-sm text-gray-600">
-                        Claimed {new Date(claim.claimedAt).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-                  <Badge variant="outline" className="capitalize">
-                    {claim.status.replace('_', ' ')}
-                  </Badge>
-                </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {myClaimedDonations.map((donation) => (
+                <DonationCard 
+                  key={donation.id} 
+                  donation={donation} 
+                  showActions={false}
+                />
               ))}
             </div>
           )}
