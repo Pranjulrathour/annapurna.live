@@ -281,7 +281,7 @@ export default function VolunteerDashboard() {
   return (
     <div className="space-y-8">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-accent/90 to-primary/80 rounded-2xl p-8 text-white border border-accent/20 shadow-md">
+      <div className="bg-gradient-to-r from-blue-600/90 to-blue-400/80 rounded-2xl p-8 text-white border border-blue-500/20 shadow-md">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div>
             <div className="flex items-center gap-2 mb-1">

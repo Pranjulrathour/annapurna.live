@@ -174,7 +174,7 @@ export default function NGODashboard() {
   return (
     <div className="space-y-8">
       {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-primary/90 to-secondary/80 rounded-2xl p-8 text-white border border-primary/20 shadow-md">
+      <div className="bg-gradient-to-r from-yellow-500/90 to-amber-400/80 rounded-2xl p-8 text-white border border-yellow-400/20 shadow-md">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div>
             <div className="flex items-center gap-2 mb-1">
