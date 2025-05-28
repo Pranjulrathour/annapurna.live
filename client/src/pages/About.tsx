@@ -12,7 +12,7 @@ const teamMembers = [
     name: "Pranjul Rathour",
     role: "Founder & CEO",
     bio: "Passionate about technology and social impact, Pranjul founded Annapurna to solve the food waste crisis in India.",
-    image: "https://images.unsplash.com/photo-1580518324671-c2b67dfa7e93?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    image: "https://raw.githubusercontent.com/Pranjulrathour/photo/refs/heads/main/image_(1)%5B1%5D.png"
   },
   {
     name: "Aisha Sharma",
@@ -128,17 +128,23 @@ export default function About() {
             </div>
             
             <div className="hidden md:flex space-x-1">
-              {["Home", "Discover", "About", "Impact", "Community"].map((item, index) => (
+              {[
+                { name: "Home", path: "/" },
+                { name: "Discover", path: "/discover" },
+                { name: "About", path: "/about" },
+                { name: "Impact", path: "/#impact" },
+                { name: "Community", path: "/#community" }
+              ].map((item, index) => (
                 <motion.a
-                  key={item}
-                  href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  key={item.name}
+                  href={item.path}
                   className="relative px-4 py-2 mx-1 text-gray-200 rounded-full hover:text-white hover:bg-white/10 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.1 * index }}
                 >
-                  {item}
+                  {item.name}
                 </motion.a>
               ))}
             </div>
@@ -150,7 +156,7 @@ export default function About() {
               whileHover={{ scale: 1.05 }}
             >
               <Button 
-                onClick={() => navigate("/dashboard")} 
+                onClick={() => setLocation("/dashboard")} 
                 className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-medium"
                 size="lg"
               >

@@ -118,17 +118,23 @@ export default function Discover() {
             </div>
             
             <div className="hidden md:flex space-x-1">
-              {["Home", "Discover", "About", "Impact", "Community"].map((item, index) => (
+              {[
+                { name: "Home", path: "/" },
+                { name: "Discover", path: "/discover" },
+                { name: "About", path: "/about" },
+                { name: "Impact", path: "/#impact" },
+                { name: "Community", path: "/#community" }
+              ].map((item, index) => (
                 <motion.a
-                  key={item}
-                  href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  key={item.name}
+                  href={item.path}
                   className="relative px-4 py-2 mx-1 text-gray-200 rounded-full hover:text-white hover:bg-white/10 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.1 * index }}
                 >
-                  {item}
+                  {item.name}
                 </motion.a>
               ))}
             </div>
