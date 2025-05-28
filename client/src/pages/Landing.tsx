@@ -129,7 +129,7 @@ export default function Landing() {
       </motion.nav>
 
       {/* Hero Section - Enhanced with parallax effects */}
-      <section className="relative z-10 pt-0 pb-40 min-h-screen overflow-hidden">
+      <section className="relative z-10 pt-0 pb-40 min-h-screen overflow-hidden bg-gradient-to-br from-black to-slate-950">
         {/* Floating particles in background */}
         <div className="absolute inset-0 z-0 opacity-60">
           {[...Array(20)].map((_, i) => (
@@ -461,7 +461,7 @@ export default function Landing() {
       </section>
 
       {/* Impact Stats Section - Redesigned with 3D cards */}
-      <section id="impact" ref={impactRef} className="py-24 bg-gradient-to-b from-slate-800 to-slate-900 relative">
+      <section id="impact" ref={impactRef} className="py-24 bg-gradient-to-br from-black to-slate-950 relative">
         {/* Background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute left-0 bottom-0 w-1/2 h-[60%] bg-primary/5 rounded-full blur-[100px]" />
@@ -653,7 +653,7 @@ export default function Landing() {
       </section>
 
       {/* Community Testimonials - Redesigned with real Indian people */}
-      <section id="community" className="py-24 bg-gradient-to-br from-slate-900 to-slate-800 relative overflow-hidden">
+      <section id="community" className="py-24 bg-gradient-to-br from-black to-slate-950 relative overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute right-0 top-0 w-1/2 h-1/2 bg-amber-500/5 rounded-full blur-[120px]" />
