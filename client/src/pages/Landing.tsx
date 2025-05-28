@@ -196,7 +196,7 @@ export default function Landing() {
                   className="text-2xl md:text-4xl font-semibold text-gray-200 mb-4 drop-shadow-xl"
                   style={{ textShadow: '0 0 20px rgba(255,255,255,0.2)' }}
                 >
-                  Your Food Sharing Community
+                  Your Food Sharing platform
                 </motion.h2>
               </div>
             </motion.div>
@@ -336,7 +336,7 @@ export default function Landing() {
       </section>
 
       {/* Impact Gallery Section - Redesigned with parallax effect */}
-      <section className="py-24 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-black to-slate-950 relative overflow-hidden">
         {/* Background elements */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute right-0 bottom-0 w-full h-[70%] bg-gradient-to-t from-amber-500/10 to-transparent" />
@@ -462,7 +462,7 @@ export default function Landing() {
         </div>
         
         {/* Gradient overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-800 to-transparent z-10"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-950 to-transparent z-10"></div>
       </section>
 
       {/* Impact Stats Section - Redesigned with 3D cards */}
