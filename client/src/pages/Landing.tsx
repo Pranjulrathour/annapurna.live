@@ -61,8 +61,8 @@ export default function Landing() {
               transition={{ duration: 0.8 }}
               className="flex flex-col items-center justify-center relative"
             >
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-0 z-10 drop-shadow-md mt-8">Welcome to</h1>
-              <div className="transform scale-450 md:scale-600 lg:scale-750 hover:scale-760 transition-transform duration-300 -mt-2 md:-mt-4 lg:-mt-6">
+              <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-0 z-10 drop-shadow-lg mt-2">Welcome to</h1>
+              <div className="transform scale-450 md:scale-600 lg:scale-750 hover:scale-760 transition-transform duration-300 -mt-12 md:-mt-16 lg:-mt-20">
                 <Logo size="xl" />
               </div>
               <div className="mt-24 md:mt-28 lg:mt-32 z-10 flex flex-col items-center">
