@@ -924,11 +924,11 @@ export default function Landing() {
 
 
       {/* Modern Footer with Navigation and Social Links */}
-      <footer className="bg-black text-white py-16 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-black text-white py-16 border-t border-white/10 relative z-10 pointer-events-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             {/* Logo and Description */}
-            <div className="col-span-1 md:col-span-2">
+            <div className="col-span-1 md:col-span-2 pointer-events-auto">
               <div className="flex items-center mb-4">
                 <Logo size="md" />
                 <Badge className="ml-2 bg-amber-500/20 text-amber-300 border-amber-500/30 font-medium">
@@ -940,51 +940,47 @@ export default function Landing() {
                 Our AI-powered system makes food sharing efficient, trackable, and impactful.
               </p>
               <div className="flex space-x-4">
-                <motion.a 
+                <a 
                   href="#facebook"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-500/20 transition-colors duration-300"
-                  whileHover={{ y: -5 }}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-500/20 transition-colors duration-300 cursor-pointer"
                 >
                   <Facebook className="h-5 w-5 text-blue-400" />
-                </motion.a>
-                <motion.a 
+                </a>
+                <a 
                   href="#twitter"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-sky-500/20 transition-colors duration-300"
-                  whileHover={{ y: -5 }}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-sky-500/20 transition-colors duration-300 cursor-pointer"
                 >
                   <Twitter className="h-5 w-5 text-sky-400" />
-                </motion.a>
-                <motion.a 
+                </a>
+                <a 
                   href="#instagram"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pink-500/20 transition-colors duration-300"
-                  whileHover={{ y: -5 }}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-pink-500/20 transition-colors duration-300 cursor-pointer"
                 >
                   <Instagram className="h-5 w-5 text-pink-400" />
-                </motion.a>
-                <motion.a 
+                </a>
+                <a 
                   href="#linkedin"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-500/20 transition-colors duration-300"
-                  whileHover={{ y: -5 }}
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-500/20 transition-colors duration-300 cursor-pointer"
                 >
                   <Linkedin className="h-5 w-5 text-blue-400" />
-                </motion.a>
+                </a>
               </div>
             </div>
             
             {/* Quick Links */}
-            <div>
+            <div className="pointer-events-auto">
               <h3 className="text-lg font-semibold mb-4 text-amber-300">Quick Links</h3>
               <ul className="space-y-2">
                 {['How It Works', 'About Us', 'Impact Stories', 'Blog', 'Partner With Us'].map((link) => (
-                  <motion.li key={link} whileHover={{ x: 5 }} transition={{ type: "spring", stiffness: 300 }}>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">{link}</a>
-                  </motion.li>
+                  <li key={link} className="transform hover:translate-x-1 transition-transform duration-200">
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer">{link}</a>
+                  </li>
                 ))}
               </ul>
             </div>
             
             {/* Contact Info */}
-            <div>
+            <div className="pointer-events-auto">
               <h3 className="text-lg font-semibold mb-4 text-amber-300">Contact</h3>
               <ul className="space-y-2 text-gray-400">
                 <li className="flex items-center">
@@ -997,21 +993,26 @@ export default function Landing() {
                   <span className="mr-2">📱</span> +91 8467977141
                 </li>
               </ul>
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                className="mt-4 bg-white/10 hover:bg-white/20 py-2 px-4 rounded-lg text-sm transition-colors duration-300"
+              <button 
+                className="mt-4 bg-white/10 hover:bg-white/20 py-2 px-4 rounded-lg text-sm transition-colors duration-300 cursor-pointer"
               >
                 Contact Us
-              </motion.button>
+              </button>
             </div>
           </div>
           
-          <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm mb-4 md:mb-0">© 2024 Annapurna. All rights reserved. Made with ❤️ for fighting hunger.</p>
+          <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center pointer-events-auto">
+            <div className="text-gray-500 text-sm mb-4 md:mb-0">
+              <span className="pointer-events-auto">© 2024 Annapurna. All rights reserved. Made with ❤️ by </span>
+              <a href="https://github.com/Pranjulrathour/annapurna.live" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 transition-colors inline-block cursor-pointer pointer-events-auto">
+                Pranjul Rathour
+              </a>
+              <span className="pointer-events-auto"> for fighting hunger.</span>
+            </div>
             <div className="flex space-x-6 text-sm text-gray-500">
-              <a href="#" className="hover:text-amber-300 transition-colors duration-200">Privacy Policy</a>
-              <a href="#" className="hover:text-amber-300 transition-colors duration-200">Terms of Service</a>
-              <a href="#" className="hover:text-amber-300 transition-colors duration-200">Cookie Policy</a>
+              <a href="#" className="hover:text-amber-300 transition-colors duration-200 cursor-pointer">Privacy Policy</a>
+              <a href="#" className="hover:text-amber-300 transition-colors duration-200 cursor-pointer">Terms of Service</a>
+              <a href="#" className="hover:text-amber-300 transition-colors duration-200 cursor-pointer">Cookie Policy</a>
             </div>
           </div>
         </div>

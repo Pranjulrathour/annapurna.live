@@ -476,8 +476,8 @@ export default function About() {
       </main>
 
       {/* Footer - Same as Landing page for consistency */}
-      <footer className="bg-black/50 backdrop-blur-xl border-t border-white/10 py-12 text-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-black text-white py-16 border-t border-white/10 relative z-10 pointer-events-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div className="col-span-1 md:col-span-1">
               <Logo size="sm" />
@@ -511,16 +511,16 @@ export default function About() {
             <div>
               <h3 className="text-lg font-semibold text-white mb-4">Follow Us</h3>
               <div className="flex space-x-4 mb-4">
-                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors">
+                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors cursor-pointer pointer-events-auto">
                   <img src="/facebook.svg" alt="Facebook" className="h-5 w-5" />
                 </a>
-                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors">
+                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors cursor-pointer pointer-events-auto">
                   <img src="/twitter.svg" alt="Twitter" className="h-5 w-5" />
                 </a>
-                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors">
+                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors cursor-pointer pointer-events-auto">
                   <img src="/instagram.svg" alt="Instagram" className="h-5 w-5" />
                 </a>
-                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors">
+                <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors cursor-pointer pointer-events-auto">
                   <img src="/linkedin.svg" alt="LinkedIn" className="h-5 w-5" />
                 </a>
               </div>
@@ -530,8 +530,10 @@ export default function About() {
             </div>
           </div>
           
-          <div className="mt-12 pt-8 border-t border-white/10 text-center text-sm">
-            <p>© {new Date().getFullYear()} Annapurna Nutrition. All rights reserved.</p>
+          <div className="mt-12 pt-8 border-t border-white/10 text-center text-sm pointer-events-auto">
+            <p className="pointer-events-auto">© {new Date().getFullYear()} Annapurna Nutrition. All rights reserved. Made with ❤️ by</p>
+            <a href="https://github.com/Pranjulrathour/annapurna.live" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 transition-colors inline-block cursor-pointer pointer-events-auto mt-2 mb-2">Pranjul Rathour</a>
+            <p className="pointer-events-auto">for fighting hunger.</p>
           </div>
         </div>
       </footer>
