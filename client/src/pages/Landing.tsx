@@ -61,14 +61,16 @@ export default function Landing() {
               transition={{ duration: 0.8 }}
               className="flex flex-col items-center justify-center mb-6"
             >
-              <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white mb-6">Welcome to</h1>
-              <Logo size="xl" className="my-6 transform scale-150 hover:scale-160 transition-transform duration-300" />
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-2">Welcome to</h1>
+              <div className="mt-2 md:-mt-2 transform scale-150 md:scale-175 lg:scale-200 hover:scale-210 transition-transform duration-300">
+                <Logo size="xl" />
+              </div>
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-2xl md:text-4xl font-semibold text-gray-300 mb-4"
+              className="text-2xl md:text-4xl font-semibold text-gray-300 mb-4 -mt-2 md:-mt-4"
             >
               Your Food Sharing Community
             </motion.h2>
