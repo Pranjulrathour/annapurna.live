@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Sprout, Heart, HandHeart, Users, MapPin, TrendingUp, ArrowRight, Star, Globe, Shield } from "lucide-react";
 import AuthModal from "@/components/AuthModal";
+import { Logo } from "../components/Logo";
 
 export default function Landing() {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -35,10 +36,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Sprout className="text-white h-5 w-5" />
-              </div>
-              <span className="ml-2 text-xl font-bold text-white">Annapurna</span>
+              <Logo size="md" />
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <a href="#discover" className="text-gray-300 hover:text-white transition-colors">Discover</a>
@@ -57,14 +55,15 @@ export default function Landing() {
       <section className="relative z-10 pt-20 pb-80 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <motion.h1 
+            <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl font-bold text-white mb-6"
+              className="flex flex-col items-center justify-center mb-6"
             >
-              Welcome to <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Annapurna</span>:
-            </motion.h1>
+              <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold text-white mb-6">Welcome to</h1>
+              <Logo size="xl" className="my-6 transform scale-150 hover:scale-160 transition-transform duration-300" />
+            </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -497,10 +496,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Sprout className="text-white h-5 w-5" />
-              </div>
-              <span className="ml-2 text-xl font-semibold">Annapurna</span>
+              <Logo size="md" className="transform scale-110" />
             </div>
             <p className="text-muted-foreground">© 2024 Annapurna. Made with ❤️ for fighting hunger.</p>
           </div>
