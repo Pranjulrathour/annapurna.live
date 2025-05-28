@@ -94,7 +94,7 @@ const categories = [
 ];
 
 export default function Discover() {
-  const navigate = useNavigate();
+  const [_, setLocation] = useLocation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-slate-950 text-white">
@@ -111,7 +111,7 @@ export default function Discover() {
               <motion.div 
                 whileHover={{ scale: 1.05 }}
                 className="cursor-pointer"
-                onClick={() => navigate("/")}
+                onClick={() => setLocation("/")}
               >
                 <Logo size="sm" />
               </motion.div>
@@ -140,7 +140,7 @@ export default function Discover() {
               whileHover={{ scale: 1.05 }}
             >
               <Button 
-                onClick={() => navigate("/dashboard")} 
+                onClick={() => setLocation("/dashboard")} 
                 className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-medium"
                 size="lg"
               >

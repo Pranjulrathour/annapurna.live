@@ -104,7 +104,7 @@ const milestones = [
 ];
 
 export default function About() {
-  const navigate = useNavigate();
+  const [_, setLocation] = useLocation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-slate-950 text-white">
@@ -121,7 +121,7 @@ export default function About() {
               <motion.div 
                 whileHover={{ scale: 1.05 }}
                 className="cursor-pointer"
-                onClick={() => navigate("/")}
+                onClick={() => setLocation("/")}
               >
                 <Logo size="sm" />
               </motion.div>
@@ -446,14 +446,14 @@ export default function About() {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Button 
-                    onClick={() => navigate("/signup")}
+                    onClick={() => setLocation("/signup")}
                     className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-6 text-lg font-semibold"
                     size="lg"
                   >
                     Join Annapurna <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                   <Button 
-                    onClick={() => navigate("/contact")}
+                    onClick={() => setLocation("/contact")}
                     className="bg-white/10 hover:bg-white/20 text-white rounded-full px-8 py-6 text-lg font-semibold"
                     size="lg"
                   >
