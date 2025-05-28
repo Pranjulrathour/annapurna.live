@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Search, Filter, MapPin, Clock, Star, ChevronRight, Tag } from 'lucide-react';
-import { useLocation } from 'wouter';
+import { useLocation, Link } from 'wouter';
 import { Logo } from '@/components/Logo';
 
 // Sample food data for the discover page
@@ -125,17 +125,17 @@ export default function Discover() {
                 { name: "Impact", path: "/#impact" },
                 { name: "Community", path: "/#community" }
               ].map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.path}
-                  className="relative px-4 py-2 mx-1 text-gray-200 rounded-full hover:text-white hover:bg-white/10 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 * index }}
-                >
-                  {item.name}
-                </motion.a>
+                <Link key={item.name} href={item.path}>
+                  <motion.a
+                    className="relative px-4 py-2 mx-1 text-gray-200 rounded-full hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 * index }}
+                  >
+                    {item.name}
+                  </motion.a>
+                </Link>
               ))}
             </div>
             
@@ -145,13 +145,14 @@ export default function Discover() {
               transition={{ duration: 0.4, delay: 0.5 }}
               whileHover={{ scale: 1.05 }}
             >
-              <Button 
-                onClick={() => setLocation("/dashboard")} 
-                className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-medium"
-                size="lg"
-              >
-                Dashboard
-              </Button>
+              <Link href="/dashboard">
+                <Button 
+                  className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-medium"
+                  size="lg"
+                >
+                  Dashboard
+                </Button>
+              </Link>
             </motion.div>
           </div>
         </div>

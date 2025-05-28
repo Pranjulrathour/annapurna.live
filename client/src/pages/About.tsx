@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Users, Sparkles, HandHeart, Leaf, Globe, Award } from 'lucide-react';
-import { useLocation } from 'wouter';
+import { useLocation, Link } from 'wouter';
 import { Logo } from '@/components/Logo';
 
 // Team members data
@@ -135,17 +135,17 @@ export default function About() {
                 { name: "Impact", path: "/#impact" },
                 { name: "Community", path: "/#community" }
               ].map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.path}
-                  className="relative px-4 py-2 mx-1 text-gray-200 rounded-full hover:text-white hover:bg-white/10 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 * index }}
-                >
-                  {item.name}
-                </motion.a>
+                <Link key={item.name} href={item.path}>
+                  <motion.a
+                    className="relative px-4 py-2 mx-1 text-gray-200 rounded-full hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 * index }}
+                  >
+                    {item.name}
+                  </motion.a>
+                </Link>
               ))}
             </div>
             
@@ -155,13 +155,14 @@ export default function About() {
               transition={{ duration: 0.4, delay: 0.5 }}
               whileHover={{ scale: 1.05 }}
             >
-              <Button 
-                onClick={() => setLocation("/dashboard")} 
-                className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-medium"
-                size="lg"
-              >
-                Dashboard
-              </Button>
+              <Link href="/dashboard">
+                <Button 
+                  className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-medium"
+                  size="lg"
+                >
+                  Dashboard
+                </Button>
+              </Link>
             </motion.div>
           </div>
         </div>
@@ -451,20 +452,22 @@ export default function About() {
                   Join our community of food heroes and help us create a world where no good food goes to waste
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Button 
-                    onClick={() => setLocation("/signup")}
-                    className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-6 text-lg font-semibold"
-                    size="lg"
-                  >
-                    Join Annapurna <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  <Button 
-                    onClick={() => setLocation("/contact")}
-                    className="bg-white/10 hover:bg-white/20 text-white rounded-full px-8 py-6 text-lg font-semibold"
-                    size="lg"
-                  >
-                    Contact Us
-                  </Button>
+                  <Link href="/signup">
+                    <Button 
+                      className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 py-6 text-lg font-semibold"
+                      size="lg"
+                    >
+                      Join Annapurna <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/contact">
+                    <Button 
+                      className="bg-white/10 hover:bg-white/20 text-white rounded-full px-8 py-6 text-lg font-semibold"
+                      size="lg"
+                    >
+                      Contact Us
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

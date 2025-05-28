@@ -7,7 +7,7 @@ import AuthModal from "@/components/AuthModal";
 import { Logo } from "../components/Logo";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import { Link } from 'wouter';
 
 export default function Landing() {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -101,17 +101,24 @@ export default function Landing() {
                 { name: 'Community', path: '#community' },
                 { name: 'About', path: '/about' }
               ].map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.path}
-                  className="relative px-4 py-2 mx-1 text-gray-200 rounded-full hover:text-white hover:bg-white/10 transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 * index }}
-                >
-                  {item.name}
-                </motion.a>
+                <Link key={item.name} href={item.path}>
+                  <motion.a
+                    className="relative px-4 py-2 mx-1 text-gray-200 rounded-full hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 * index }}
+                    onClick={(e) => {
+                      // Prevent default for hash links but allow them to work
+                      if (item.path.startsWith('#')) {
+                        e.preventDefault();
+                        document.querySelector(item.path)?.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                  >
+                    {item.name}
+                  </motion.a>
+                </Link>
               ))}
             </div>
             
