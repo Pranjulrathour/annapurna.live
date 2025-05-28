@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/Landing";
+import Discover from "@/pages/Discover";
+import About from "@/pages/About";
 import Dashboard from "@/pages/Dashboard";
 import DonorDashboard from "@/pages/DonorDashboard";
 import NGODashboard from "@/pages/NGODashboard";
@@ -51,7 +53,11 @@ function Router() {
     <Switch>
       {loading || !isAuthenticated ? (
         // Public routes
-        <Route path="/" component={Landing} />
+        <>
+          <Route path="/" component={Landing} />
+          <Route path="/discover" component={Discover} />
+          <Route path="/about" component={About} />
+        </>
       ) : (
         // Protected routes with Layout
         <>

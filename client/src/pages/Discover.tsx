@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Search, Filter, MapPin, Clock, Star, ChevronRight, Tag } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import Logo from '@/components/Logo';
+import { useLocation } from 'wouter';
+import { Logo } from '@/components/Logo';
 
 // Sample food data for the discover page
 const foodItems = [
