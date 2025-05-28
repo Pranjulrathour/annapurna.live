@@ -52,14 +52,14 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-20 pb-80 min-h-screen">
+      <section className="relative z-10 pt-0 pb-80 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center justify-center relative"
+              className="flex flex-col items-center justify-start relative mt-0"
             >
               <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-0 z-10 drop-shadow-lg mt-14 md:mt-16 lg:mt-20">Welcome to</h1>
               <div className="transform scale-800 md:scale-1000 lg:scale-1200 hover:scale-1210 transition-transform duration-300 -mt-20 md:-mt-28 lg:-mt-36">
