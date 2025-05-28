@@ -12,7 +12,7 @@ export function Logo({ className = '', size = 'md', withText = false }: LogoProp
     sm: 'h-12',
     md: 'h-20',
     lg: 'h-28',
-    xl: 'h-60'
+    xl: 'h-96'
   };
 
   return (
