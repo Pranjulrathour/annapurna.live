@@ -236,8 +236,8 @@ export default function Landing() {
               </motion.div>
             </motion.div>
 
-            {/* Floating Food Cards - Enhanced with interactive elements */}
-            <div className="relative mt-16 hidden md:block h-72">
+            {/* Floating Food Cards - Enhanced with interactive elements and improved positioning */}
+            <div className="relative mt-16 hidden md:block h-[32rem] mx-auto max-w-6xl">
               {floatingFoods.map((food, index) => (
                 <motion.div
                   key={food.id}
@@ -248,12 +248,13 @@ export default function Landing() {
                     delay: 0.8 + index * 0.1,
                     ease: "easeOut"
                   }}
-                  className={`absolute bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-xl shadow-black/5 ${
-                    index === 0 ? 'left-4 top-0 md:left-20' :
-                    index === 1 ? 'right-4 top-12 md:right-32' :
-                    index === 2 ? 'left-1/2 transform -translate-x-1/2 top-24' :
-                    index === 3 ? 'left-8 bottom-4 md:left-40' :
-                    'right-8 bottom-16 md:right-20'
+                  className={`absolute bg-black/20 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-xl shadow-black/5 w-64 ${
+                    // Position cards in a pentagon-like formation with plenty of spacing
+                    index === 0 ? 'left-10 top-10' :
+                    index === 1 ? 'right-10 top-10' :
+                    index === 2 ? 'left-[calc(50%-8rem)] top-[8rem]' :
+                    index === 3 ? 'left-24 bottom-20' :
+                    'right-24 bottom-20'
                   }`}
                   whileHover={{ scale: 1.05, y: -5, rotateZ: index % 2 === 0 ? 2 : -2 }}
                   drag
