@@ -65,7 +65,7 @@ export default function Landing() {
               <div className="transform scale-800 md:scale-1000 lg:scale-1200 hover:scale-1210 transition-transform duration-300 -mt-20 md:-mt-28 lg:-mt-36">
                 <Logo size="xl" />
               </div>
-              <div className="mt-4 md:mt-6 lg:mt-8 z-10 flex flex-col items-center">
+              <div className="mt-0 md:mt-0 lg:mt-0 -mt-6 md:-mt-8 lg:-mt-10 z-10 flex flex-col items-center">
                 <motion.h2 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
