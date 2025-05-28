@@ -59,26 +59,28 @@ export default function Landing() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center justify-center mb-6"
+              className="flex flex-col items-center justify-center relative"
             >
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-0">Welcome to</h1>
-              <div className="mt-0 transform scale-175 md:scale-200 lg:scale-225 hover:scale-235 transition-transform duration-300">
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-0 z-10 drop-shadow-md mt-8">Welcome to</h1>
+              <div className="transform scale-450 md:scale-600 lg:scale-750 hover:scale-760 transition-transform duration-300 -mt-2 md:-mt-4 lg:-mt-6">
                 <Logo size="xl" />
               </div>
+              <div className="mt-24 md:mt-28 lg:mt-32 z-10 flex flex-col items-center">
+                <motion.h2 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-2xl md:text-4xl font-semibold text-gray-300 mb-4 drop-shadow-md"
+                >
+                  Your Food Sharing Community
+                </motion.h2>
+              </div>
             </motion.div>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-2xl md:text-4xl font-semibold text-gray-300 mb-4 -mt-6 md:-mt-8 lg:-mt-10"
-            >
-              Your Food Sharing Community
-            </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto"
+              className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto mt-6"
             >
               Unleash your generosity and create connections with AI at Annapurna. Share your surplus food with friends and the world in this simple online platform where every meal meets art.
             </motion.p>
